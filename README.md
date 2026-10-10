@@ -70,6 +70,11 @@ Detailed breakdown cards with spending progress for 13 wedding categories:
 - **Backup & Restore (JSON)**: Save a backup file or transfer your data across devices.
 - **Safe Reset**: Safe confirmation modals to avoid accidental data loss.
 
+### 8. 📱 Installable App (PWA & Offline Mode)
+- **Install to Desktop & Mobile**: Install the planner directly onto Windows, Mac, Android, and iOS devices with a single click.
+- **Native Experience**: Runs standalone without browser toolbars or distractions.
+- **Offline Capable**: Uses a Service Worker to cache assets and work completely offline without internet.
+
 ---
 
 ## 📁 Project Structure
@@ -79,6 +84,12 @@ Wedding Preparation Planner/
 ├── index.html                        # Semantic layout and components
 ├── style.css                         # Elegant wedding theme styling
 ├── script.js                         # Application logic & local storage
+├── manifest.json                     # Progressive Web App manifest
+├── sw.js                             # Service Worker for offline support
+├── icons/                            # App icons (192px, 512px, SVG)
+│   ├── icon.svg
+│   ├── icon-192.png
+│   └── icon-512.png
 ├── Wedding_Planner_Sample_Sheet.csv  # Ready-to-use spreadsheet template
 └── README.md                         # Project documentation
 ```

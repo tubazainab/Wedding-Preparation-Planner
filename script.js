@@ -1914,6 +1914,96 @@ function setupEventListeners() {
       pendingConfirmCallback = null;
     });
   }
+
+  // 11. PWA Install App Buttons
+  const btnInstallApp = document.getElementById('btnInstallApp');
+  const btnInstallAppSettings = document.getElementById('btnInstallAppSettings');
+  const btnTriggerInstallPromptModal = document.getElementById('btnTriggerInstallPromptModal');
+
+  if (btnInstallApp) btnInstallApp.addEventListener('click', triggerInstallFlow);
+  if (btnInstallAppSettings) btnInstallAppSettings.addEventListener('click', triggerInstallFlow);
+  if (btnTriggerInstallPromptModal) btnTriggerInstallPromptModal.addEventListener('click', triggerInstallFlow);
+}
+
+/**
+ * ===================================================================
+ * PROGRESSIVE WEB APP (PWA) & SERVICE WORKER
+ * ===================================================================
+ */
+
+let deferredInstallPrompt = null;
+
+// Catch native PWA beforeinstallprompt
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+
+  // Make install buttons visible and prominent
+  const btnInstallApp = document.getElementById('btnInstallApp');
+  const btnTriggerInstallPromptModal = document.getElementById('btnTriggerInstallPromptModal');
+  const btnInstallAppSettings = document.getElementById('btnInstallAppSettings');
+
+  if (btnInstallApp) btnInstallApp.style.display = 'inline-flex';
+  if (btnTriggerInstallPromptModal) btnTriggerInstallPromptModal.style.display = 'inline-flex';
+  if (btnInstallAppSettings) {
+    btnInstallAppSettings.classList.add('btn-primary');
+    btnInstallAppSettings.classList.remove('btn-outline');
+  }
+});
+
+// Trigger installation flow
+function triggerInstallFlow() {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        showToast('Installing Wedding Planner...', 'info');
+      }
+      deferredInstallPrompt = null;
+    });
+  } else {
+    // Check if already in standalone mode
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    if (isStandalone) {
+      showToast('Wedding Planner is already installed and running!', 'info');
+    } else {
+      // Show instructional modal for browser/iOS Safari
+      openModal(document.getElementById('modalInstallApp'));
+    }
+  }
+}
+
+// App installed successfully
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  const btnInstallApp = document.getElementById('btnInstallApp');
+  if (btnInstallApp) btnInstallApp.style.display = 'none';
+
+  const statusText = document.getElementById('installCardStatusText');
+  if (statusText) statusText.innerHTML = '<span class="status-badge status-purchased"><i class="fa-solid fa-circle-check"></i> Installed as Standalone App</span>';
+
+  const installBtnText = document.getElementById('installBtnText');
+  if (installBtnText) installBtnText.textContent = 'App Installed';
+
+  const btnSettings = document.getElementById('btnInstallAppSettings');
+  if (btnSettings) btnSettings.setAttribute('disabled', 'true');
+
+  showToast('Wedding Planner installed successfully! 🎉', 'success');
+});
+
+// Register Service Worker for offline capability
+function registerServiceWorker() {
+  if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then((reg) => {
+          console.log('Wedding Planner ServiceWorker registered successfully:', reg.scope);
+        })
+        .catch((err) => {
+          console.log('ServiceWorker registration skipped or failed:', err);
+        });
+    });
+  }
 }
 
 /**
@@ -1925,6 +2015,22 @@ document.addEventListener('DOMContentLoaded', () => {
   loadState();
   setupEventListeners();
   refreshAllViews();
+  registerServiceWorker();
+
+  // Check if already standalone on load
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (isStandalone) {
+    const statusText = document.getElementById('installCardStatusText');
+    if (statusText) statusText.innerHTML = '<span class="status-badge status-purchased"><i class="fa-solid fa-circle-check"></i> Running as Installed App</span>';
+    const installBtnText = document.getElementById('installBtnText');
+    if (installBtnText) installBtnText.textContent = 'Installed';
+    const btnInstallApp = document.getElementById('btnInstallApp');
+    if (btnInstallApp) btnInstallApp.style.display = 'none';
+  } else {
+    // Show install button in header on desktop/mobile browsers
+    const btnInstallApp = document.getElementById('btnInstallApp');
+    if (btnInstallApp) btnInstallApp.style.display = 'inline-flex';
+  }
 
   // Periodic countdown check every minute
   setInterval(updateWeddingCountdown, 60000);

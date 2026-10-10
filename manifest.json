@@ -1,0 +1,33 @@
+{
+  "id": "eternal-vows-wedding-planner",
+  "name": "Eternal Vows — Wedding Preparation Planner",
+  "short_name": "Wedding Planner",
+  "description": "Personal Wedding Preparation Planner & Budget Tracker in Indian Rupees (₹). Manage expenses, checklist items, and tasks offline.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fdfaf7",
+  "theme_color": "#b76e79",
+  "categories": ["lifestyle", "productivity", "finance"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

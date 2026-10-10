@@ -4,8 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Personal Wedding Preparation Planner & Budget Tracker - Organize expenses, checklist, tasks, and budget in Indian Rupees.">
+  <meta name="theme-color" content="#b76e79">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Wedding Planner">
+
   <title>Wedding Preparation Planner | Personal Wedding Organizer</title>
   
+  <!-- Web App Manifest for PWA Installation -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="alternate icon" type="image/png" href="icons/icon-192.png">
+
   <!-- Google Fonts for Elegant Wedding Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,6 +52,9 @@
       </nav>
 
       <div class="header-actions">
+        <button class="btn btn-outline" id="btnInstallApp" title="Install as Desktop or Mobile App" style="display: none;">
+          <i class="fa-solid fa-mobile-screen-button"></i> <span>Install App</span>
+        </button>
         <button class="btn btn-outline" id="btnOpenSetBudget" title="Set Wedding Budget">
           <i class="fa-solid fa-indian-rupee-sign"></i> <span>Set Budget</span>
         </button>
@@ -423,6 +437,18 @@
               <i class="fa-solid fa-file-import"></i> Import Sheet
             </button>
           </div>
+        </div>
+
+        <!-- Install as Standalone App (PWA) -->
+        <div class="setting-card card-panel">
+          <div class="setting-icon" style="background: #eef8f3; color: #137333;"><i class="fa-solid fa-mobile-screen-button"></i></div>
+          <div class="setting-info">
+            <h4>Install as Standalone App</h4>
+            <p id="installCardStatusText">Install Wedding Planner directly onto your computer, phone, or tablet for one-click desktop launch and offline access.</p>
+          </div>
+          <button class="btn btn-outline btn-sm" id="btnInstallAppSettings" style="align-self: flex-start; margin-top: auto;">
+            <i class="fa-solid fa-download"></i> <span id="installBtnText">Install App</span>
+          </button>
         </div>
 
         <!-- Export to CSV -->
@@ -824,7 +850,51 @@
     </div>
   </div>
 
-  <!-- 6. CONFIRMATION MODAL -->
+  <!-- 6. INSTALL APP GUIDE MODAL -->
+  <div class="modal-overlay" id="modalInstallApp" aria-hidden="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fa-solid fa-mobile-screen-button"></i> Install Wedding Planner App</h3>
+        <button class="modal-close" data-close-modal>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="text-align: center; margin-bottom: 1.25rem;">
+          <img src="icons/icon.svg" alt="App Icon" style="width: 72px; height: 72px; border-radius: 18px; box-shadow: var(--shadow-md); margin-bottom: 0.5rem;">
+          <h4 style="font-size: 1.15rem; margin-bottom: 0.25rem;">Eternal Vows Planner</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">Install as a native standalone app on your device</p>
+        </div>
+
+        <div class="card-panel" style="margin-bottom: 1rem; background: #fffcfd;">
+          <h5 style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--rose-gold-dark);">
+            <i class="fa-brands fa-chrome"></i> On Chrome / Edge (Windows, Mac, Android):
+          </h5>
+          <p style="font-size: 0.82rem; margin-bottom: 0.5rem; color: var(--text-secondary);">
+            Click the button below, or click the <strong>Install</strong> icon (<i class="fa-solid fa-download"></i>) in your browser's address bar.
+          </p>
+          <button class="btn btn-primary btn-sm" id="btnTriggerInstallPromptModal" style="display: none;">
+            <i class="fa-solid fa-download"></i> Click to Install App Now
+          </button>
+        </div>
+
+        <div class="card-panel" style="margin-bottom: 1rem; background: #faf7f8;">
+          <h5 style="font-size: 0.9rem; margin-bottom: 0.35rem; color: #1e429f;">
+            <i class="fa-brands fa-apple"></i> On iPhone / iPad (Safari):
+          </h5>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">
+            1. Tap the <strong>Share</strong> button (<i class="fa-solid fa-arrow-up-from-bracket"></i>) at the bottom of Safari.<br>
+            2. Scroll down and tap <strong>"Add to Home Screen"</strong>.<br>
+            3. Tap <strong>Add</strong> in the top-right corner.
+          </p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-close-modal>Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. CONFIRMATION MODAL -->
   <div class="modal-overlay" id="modalConfirm" aria-hidden="true">
     <div class="modal-container modal-sm">
       <div class="modal-header">

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff5f6"/>
+      <stop offset="50%" stop-color="#faeaec"/>
+      <stop offset="100%" stop-color="#f5d6da"/>
+    </linearGradient>
+    <linearGradient id="roseGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4a373"/>
+      <stop offset="35%" stop-color="#e8b4b8"/>
+      <stop offset="70%" stop-color="#b76e79"/>
+      <stop offset="100%" stop-color="#98535d"/>
+    </linearGradient>
+    <linearGradient id="diamondGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#f2e2e6"/>
+      <stop offset="100%" stop-color="#d4a373"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#b76e79" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background rounded squircle -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)"/>
+  
+  <!-- Outer decorative delicate circle -->
+  <circle cx="256" cy="256" r="220" fill="none" stroke="#ecd1d5" stroke-width="3" stroke-dasharray="8 6"/>
+
+  <!-- Left Ring -->
+  <g filter="url(#shadow)">
+    <ellipse cx="210" cy="280" rx="90" ry="90" fill="none" stroke="url(#roseGold)" stroke-width="26"/>
+    
+    <!-- Right Ring interlocking -->
+    <ellipse cx="302" cy="280" rx="90" ry="90" fill="none" stroke="url(#roseGold)" stroke-width="26"/>
+
+    <!-- Interlocking arch overlay -->
+    <path d="M 210,190 A 90 90 0 0 1 270,214" fill="none" stroke="url(#roseGold)" stroke-width="26" stroke-linecap="round"/>
+  </g>
+
+  <!-- Diamond on top of the left ring -->
+  <g transform="translate(210, 160)" filter="url(#shadow)">
+    <!-- Diamond facets -->
+    <polygon points="0,-42 28,-14 0,16 -28,-14" fill="url(#diamondGrad)"/>
+    <polygon points="0,-42 12,-14 0,16" fill="#ffffff" opacity="0.6"/>
+    <polygon points="0,-42 -12,-14 0,16" fill="#d4a373" opacity="0.4"/>
+    
+    <!-- Sparkle Stars -->
+    <path d="M 0,-56 Q 0,-42 14,-42 Q 0,-42 0,-28 Q 0,-42 -14,-42 Q 0,-42 0,-56" fill="#ffffff"/>
+  </g>
+
+  <!-- Top delicate floral sparkle -->
+  <circle cx="360" cy="140" r="6" fill="#b76e79"/>
+  <circle cx="380" cy="130" r="3" fill="#d4a373"/>
+  <circle cx="130" cy="380" r="5" fill="#d4a373"/>
+  <circle cx="385" cy="380" r="7" fill="#b76e79"/>
+</svg>
